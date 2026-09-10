@@ -1,20 +1,41 @@
 pipeline {
     agent any
     stages {
+        stage('Checkout') {
+            steps {
+                sh 'echo Checking out the code'
+                checkout scm
+            }
+        }
+        
         stage('Build') {
             steps {
-                echo 'Building the project'
+                sh 'echo App is Building'
             }
         }
         stage('Test') {
             steps {
-                echo 'Running tests'
+                sh 'echo Tesing the Build'
+            }
+        }
+        stage('Deploy') {
+            when {
+                branch 'main'
+            }
+            steps {
+                sh 'echo deploying the Build'
             }
         }
     }
     post {
+        always {
+            sh 'echo this always run'
+        }
         success {
-            echo 'Pipeline succeeded'
+            sh 'echo successfully run'
+            
+        }
+        failure {
+            sh 'echo failed '
         }
     }
-}
