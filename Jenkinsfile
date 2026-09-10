@@ -39,3 +39,4 @@ pipeline {
             sh 'echo failed '
         }
     }
+}
