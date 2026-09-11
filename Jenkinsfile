@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,29 +8,31 @@ pipeline {
                     url: 'https://github.com/sahilshirsath96k/first_job.git'
             }
         }
+
         stage('Build') {
             steps {
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
-            
+
         stage('Parallel Tests') {
             parallel {
                 stage('Unit Tests') {
-                    steps { 
-                        sh 'npm test' 
+                    steps {
+                        sh 'npm test'
                     }
+                }
+
+                stage('Lint') {
+                    steps {
+                        sh 'npm run lint'
+                    }
+                }
             }
         }
     }
-            
-        stage('Lint') {
-            steps { 
-                sh 'npm run lint' 
-            }
-        }
-    }
+
     post {
         always {
             sh 'rm -rf workspace/*'
