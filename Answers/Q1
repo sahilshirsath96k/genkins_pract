@@ -25,7 +25,6 @@ https://github.com/sahilshirsath96k/Jenkins_gh
 
 Trigger option: Poll SCM
 Polling schedule: H/5 * * * *
-Reason: GitHub webhooks cannot be used because the Jenkins server has no public IP 
-and cannot receive inbound webhook requests. Poll SCM allows Jenkins to periodically
-check the Git repository for new commits and automatically trigger a build when a 
-change is detected.
+Reason: GitHub webhooks cannot be used because the Jenkins server has no public IP.
+Poll SCM allows Jenkins to periodically check the Git repository for new commits and
+automatically trigger a build when a change is detected.
