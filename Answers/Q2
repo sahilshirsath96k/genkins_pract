@@ -1,21 +1,22 @@
 Code output:
 
- > git checkout -f d81bff3fa9c195d6fd9a2a907a2a39a7b9d23ebd # timeout=10
-Commit message: "Fix syntax error in Jenkinsfile"
+> git config core.sparsecheckout # timeout=10
+ > git checkout -f 1dad67604cef802568aea96d981b2ffe1f2cf830 # timeout=10
+Commit message: "Replace echo commands with sh commands in Jenkinsfile"
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
 [Pipeline] { (Build)
 [Pipeline] sh
-+ echo App is Building
-App is Building
++ echo Building the application
+Building the application
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
 [Pipeline] { (Test)
 [Pipeline] sh
-+ echo Tesing the Build
-Tesing the Build
++ echo Running build
+Running build
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
@@ -26,9 +27,12 @@ Stage "Deploy" skipped due to when conditional
 [Pipeline] // stage
 [Pipeline] stage
 [Pipeline] { (Declarative: Post Actions)
-[Pipeline] sh
-+ echo this always run
-this always run
+[Pipeline] echo
+Archiving test reports...
+[Pipeline] archiveArtifacts
+Archiving artifacts
+‘test-reports/**’ doesn’t match anything, but ‘**’ does. Perhaps that’s what you mean?
+No artifacts found that match the file pattern "test-reports/**". Configuration error?
 [Pipeline] sh
 + echo successfully run
 successfully run
