@@ -10,7 +10,8 @@ pipeline {
         stage('Build') {
             steps {
                 retry(3) {
-                    sh 'make build'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }
@@ -19,7 +20,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'make test'
+                        sh 'npm test'
                     } catch (err) {
                         currentBuild.result = 'UNSTABLE'
                     }
