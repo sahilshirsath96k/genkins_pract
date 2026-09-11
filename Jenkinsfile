@@ -1,42 +1,38 @@
 pipeline {
     agent any
+    
     stages {
         stage('Checkout') {
             steps {
-                sh 'echo Checking out the code'
-                checkout scm
+                git url: 'https://github.com/sahilshirsath96k/first_job.git'
             }
         }
-        
         stage('Build') {
             steps {
-                sh 'echo App is Building'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
-        stage('Test') {
-            steps {
-                sh 'echo Tesing the Build'
+            
+        stage('Parallel Tests') {
+            parallel {
+                stage('Unit Tests') {
+                    steps { 
+                        sh 'npm test' 
+                    }
             }
         }
-        stage('Deploy') {
-            when {
-                branch 'main'
-            }
-            steps {
-                sh 'echo deploying the Build'
+    }
+            
+        stage('Lint') {
+            steps { 
+                sh 'npm run lint' 
             }
         }
     }
     post {
         always {
-            sh 'echo this always run'
-        }
-        success {
-            sh 'echo successfully run'
-            
-        }
-        failure {
-            sh 'echo failed '
+            sh 'rm -rf workspace/*'
         }
     }
 }
