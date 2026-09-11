@@ -11,13 +11,13 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Building the application...'
+                sh 'echo Building the application'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                sh 'echo Running build'
             }
         }
 
@@ -26,7 +26,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo 'Deploying the application...'
+                sh 'echo Deploying the application'
             }
         }
     }
@@ -38,12 +38,12 @@ pipeline {
         }
 
         success {
-            echo 'Pipeline completed successfully!'
+            sh 'echo successfully run'
         }
 
         failure {
-            echo 'Pipeline failed'
+            sh 'echo Pipeline failed'
         }
     }
 }
-```
+
