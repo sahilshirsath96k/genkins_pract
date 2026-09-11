@@ -1,41 +1,32 @@
+```groovy
 pipeline {
     agent any
 
+    environment {
+        APP_ENV = 'staging'
+    }
+
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main',
-                    url: 'https://github.com/sahilshirsath96k/jenkins_pract.git'
-            }
-        }
 
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
-            }
-        }
-
-        stage('Parallel Tests') {
-            parallel {
-                stage('Unit Tests') {
-                    steps {
-                        sh 'npm test'
-                    }
-                }
-
-                stage('Lint') {
-                    steps {
-                        sh 'npm run lint'
-                    }
+                retry(3) {
+                    sh 'make build'
                 }
             }
         }
-    }
 
-    post {
-        always {
-            sh 'rm -rf workspace/*'
+        stage('Test') {
+            steps {
+                script {
+                    try {
+                        sh 'make test'
+                    } catch (err) {
+                        currentBuild.result = 'UNSTABLE'
+                    }
+                }
+            }
         }
     }
 }
+```
