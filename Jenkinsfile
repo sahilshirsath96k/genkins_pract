@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/sahilshirsath96k/first_job/'
+                git branch: 'main',
+                    url: 'https://github.com/sahilshirsath96k/first_job.git'
             }
         }
         stage('Build') {
